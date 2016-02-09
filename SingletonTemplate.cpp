@@ -17,7 +17,7 @@ int main()
 {
 	SingletonPtr<SingletonImpl<CLogFile> > pLogFile;
 
-	pLogFile->init( "C:\\singletonTemplate.log" );
+	pLogFile->init( "C/home/bengt/exercises/singletonTemplate.log" );
 	pLogFile->write( "Writing from main" );
 
 	client();
