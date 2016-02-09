@@ -14,7 +14,6 @@ using namespace std;
 CLogFile::CLogFile()
 {
 	cout << "Creating LogFile" << endl;
-	m_reference_count = 0;  // reference count
 }
 
 CLogFile::CLogFile( const string& logfilename )
@@ -54,18 +53,3 @@ bool CLogFile::write( const string& data )
 	}
 	return true;
 }
-
-CLogFile* CLogFile::Instance()
-{
-	if( m_pInstance == 0 )
-	{
-		m_pInstance = new CLogFile();
-	}
-	m_pInstance->AddRef(); // reference count
-	return m_pInstance;
-}
-
-CLogFile* CLogFile::m_pInstance = 0;
-
-
-

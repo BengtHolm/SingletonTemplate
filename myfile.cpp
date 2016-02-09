@@ -1,7 +1,5 @@
 #include <fstream>
 #include <iterator>
-#include <string>
-
 using namespace std;
 
 #include "myfile.h"
@@ -34,18 +32,11 @@ string CFileReader::readfile(const string & filename)
 	return m_str;
 }
 
-string CFileReader::get(){return m_str;}
- /*
+string CFileReader::get()
 {
-	if (!m_initialized)
-	{
-		throw CFileReaderException();
-	}
-	else
-	{
-		return m_str;
-	}
-}*/
+
+	return m_str;
+}
 
 CFileWriter::CFileWriter()
 {
@@ -102,10 +93,5 @@ void CFileWriter::appendfile(const string & filename, const string & str)
 
 string CFileWriter::get()
 {
-	if (!m_initialized)
-		throw CFileWriterException();
-	else
-	{
-		return m_str;
-	}
+	return m_str;
 }

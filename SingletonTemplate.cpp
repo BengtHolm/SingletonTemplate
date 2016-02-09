@@ -4,18 +4,20 @@
 #include "LogFile.h"
 #include "singletonImpl.h"
 
+template <>
+SingletonImpl< CLogFile > * SingletonImpl< CLogFile >::m_pInstance=0;
 
 void client()
 {
-	SingletonPtr<CLogFile> pLogFile;
+	SingletonPtr<SingletonImpl<CLogFile> > pLogFile;
 	pLogFile->write( "Writing from client" );
 }
 
 int main()
 {
-	SingletonPtr<CLogFile> pLogFile;
+	SingletonPtr<SingletonImpl<CLogFile> > pLogFile;
 
-	pLogFile->init( "/home/bengt/exercises/singletonTemplate.log" );
+	pLogFile->init( "C:\\singletonTemplate.log" );
 	pLogFile->write( "Writing from main" );
 
 	client();
