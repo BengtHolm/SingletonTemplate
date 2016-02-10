@@ -4,9 +4,6 @@
 #include "LogFile.h"
 #include "singletonImpl.h"
 
-template <>
-SingletonImpl< CLogFile > * SingletonImpl< CLogFile >::m_pInstance=0;
-
 void client()
 {
 	SingletonPtr<CLogFile> pLogFile;

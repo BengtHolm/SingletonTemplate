@@ -7,16 +7,22 @@ class SingletonImpl : public T
 public: //singleton implementation
 	static SingletonImpl<T> * Instance()
 	{
-		if( m_pInstance == 0 )
+		if( internal_singleton_reference() == 0 )
 		{
-			m_pInstance = new SingletonImpl<T>;
+			internal_singleton_reference() = new SingletonImpl<T>;
 		}
-		m_pInstance->AddRef();
-		return m_pInstance;
+		internal_singleton_reference()->AddRef();
+		return internal_singleton_reference();
 	}
 
 private:
-	static SingletonImpl<T> * m_pInstance;
+	static SingletonImpl<T> * & internal_singleton_reference()  throw()
+	{
+		static SingletonImpl<T> * m_pSingletonInstance = 0;
+		return m_pSingletonInstance;
+	}
+
+
 
 public:
 	// reference count
@@ -25,8 +31,8 @@ public:
 	{
 	   if( --m_reference_count == 0 )
 	   {
-			delete m_pInstance;
-			m_pInstance = 0;
+			delete internal_singleton_reference();
+			internal_singleton_reference() = 0;
 	   }
 	}
 
