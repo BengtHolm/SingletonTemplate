@@ -47,13 +47,40 @@ template <typename S>
 class SingletonPtr
 {
 public:
-	SingletonPtr()					{ m_pSingleton = SingletonImpl<S>::Instance(); }
-	~SingletonPtr() throw()			{ if( m_pSingleton ) m_pSingleton->Release(); }
-	S* operator-> () const throw()	{ return m_pSingleton; }
-	S& operator* ()  const throw()	{ return *m_pSingleton; }
+	SingletonPtr()						{ m_pSingleton = SingletonImpl<S>::Instance(); }
+
+	template <class ARG1>
+	SingletonPtr( const ARG1& arg1 )	{ m_pSingleton = SingletonImpl<S>::Instance( arg1 ); }
+
+	template <class ARG1, class ARG2>
+	SingletonPtr( const ARG1& arg1, const ARG2& arg2 )
+	{ m_pSingleton = SingletonImpl<S>::Instance( arg1, arg2 ); }
+
+	~SingletonPtr() throw()				{ if( m_pSingleton ) m_pSingleton->Release(); }
+
+	// copy constructor and assignment operator
+	SingletonPtr( const SingletonPtr& rSingletonPtr ) throw()
+	{
+		m_pSingleton = rSingletonPtr.m_pSingleton;
+		if( m_pSingleton ) m_pSingleton->AddRef();
+	}
+
+	SingletonPtr& operator = ( const SingletonPtr& rSingletonPtr )  throw()
+	{
+		if( rSingletonPtr.m_pSingleton ) rSingletonPtr.m_pSingleton->AddRef();
+		// cleaning up from last pointer
+		if( m_pSingleton ) m_pSingleton->Release();
+		m_pSingleton = rSingletonPtr.m_pSingleton;
+		return *this;
+	}
+
+	// accessor functions
+	S* operator-> () const throw() { return m_pSingleton; }
+	S& operator* ()  const throw() { return *m_pSingleton; }
 
 private:
 	SingletonImpl<S> * m_pSingleton;
 };
+
 
 #endif // singletonImpl_h_included
