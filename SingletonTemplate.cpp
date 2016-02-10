@@ -9,13 +9,13 @@ SingletonImpl< CLogFile > * SingletonImpl< CLogFile >::m_pInstance=0;
 
 void client()
 {
-	SingletonPtr<SingletonImpl<CLogFile> > pLogFile;
+	SingletonPtr<CLogFile> pLogFile;
 	pLogFile->write( "Writing from client" );
 }
 
 int main()
 {
-	SingletonPtr<SingletonImpl<CLogFile> > pLogFile;
+	SingletonPtr<CLogFile> pLogFile;
 
 	pLogFile->init( "C/home/bengt/exercises/singletonTemplate.log" );
 	pLogFile->write( "Writing from main" );
